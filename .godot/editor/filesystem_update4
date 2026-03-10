@@ -1,0 +1,9 @@
+res://Objects/experience_gem.tscn
+res://Objects/experience_gem.gd
+res://root/root.tscn
+res://Player/player.tscn
+res://Player/player.gd
+res://Enemy/enemy.tscn
+res://Utility/enemy_spawner.gd
+res://Enemy/enemy.gd
+res://Player/Attack/javelin.gd

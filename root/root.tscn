@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://daad41ve41iur"]
+
+[ext_resource type="PackedScene" uid="uid://dfvxf8b50pr3u" path="res://Player/player.tscn" id="2_j4b2l"]
+[ext_resource type="Texture2D" uid="uid://carldo6vnvoos" path="res://Textures/dirt_full_new.png" id="2_js5vo"]
+[ext_resource type="PackedScene" uid="uid://bd328vods7y4u" path="res://Utility/enemy_spawner.tscn" id="3_js5vo"]
+[ext_resource type="Script" uid="uid://cabh720n5vqol" path="res://Utility/spawn_info.gd" id="4_b33ej"]
+[ext_resource type="PackedScene" uid="uid://bsyivbhmscvqk" path="res://Enemy/enemy.tscn" id="5_y5gj7"]
+
+[sub_resource type="Resource" id="Resource_e2nrw"]
+script = ExtResource("4_b33ej")
+time_end = 5
+enemy = ExtResource("5_y5gj7")
+enemy_num = 1
+metadata/_custom_type_script = "uid://cabh720n5vqol"
+
+[sub_resource type="Resource" id="Resource_b33ej"]
+script = ExtResource("4_b33ej")
+time_start = 5
+time_end = 60
+enemy = ExtResource("5_y5gj7")
+enemy_num = 2
+enemy_spawn_delay = 4
+metadata/_custom_type_script = "uid://cabh720n5vqol"
+
+[node name="root" type="Node2D" unique_id=1499677513]
+
+[node name="Background" type="Sprite2D" parent="." unique_id=281057307]
+texture_filter = 2
+texture_repeat = 2
+position = Vector2(1, -1)
+texture = ExtResource("2_js5vo")
+region_enabled = true
+region_rect = Rect2(0, 0, 4000, 4000)
+
+[node name="Player" parent="." unique_id=111082755 instance=ExtResource("2_j4b2l")]
+
+[node name="EnemySpawner" parent="." unique_id=1185639541 instance=ExtResource("3_js5vo")]
+spawns = Array[ExtResource("4_b33ej")]([SubResource("Resource_e2nrw"), SubResource("Resource_b33ej")])
+
+[node name="Loot" type="Node2D" parent="." unique_id=1597228774 groups=["loot"]]

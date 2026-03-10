@@ -1,0 +1,144 @@
+[gd_scene format=3 uid="uid://dfvxf8b50pr3u"]
+
+[ext_resource type="Script" uid="uid://ca1femql4he46" path="res://Player/player.gd" id="1_4ntmi"]
+[ext_resource type="PackedScene" uid="uid://cv2wtwedw7uk1" path="res://Utility/hurt_box.tscn" id="2_4ntmi"]
+[ext_resource type="Texture2D" uid="uid://denlh4swx7hhi" path="res://Textures/GUI/exp_background.png" id="3_gwnis"]
+[ext_resource type="Texture2D" uid="uid://lq7uyeym8qrg" path="res://Textures/GUI/exp_progress.png" id="4_k53q1"]
+[ext_resource type="FontFile" uid="uid://dx8hw3u0fred3" path="res://Font/tenderness.otf" id="5_k53q1"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l8h54"]
+load_path = "res://.godot/imported/player_sprite.png-99975927c87d39d0f4e4a4a21b6d0fe5.ctex"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ntmi"]
+radius = 6.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_btcbx"]
+size = Vector2(13, 24.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ntmi"]
+size = Vector2(549, 310)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ntmi"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_btcbx"]
+
+[node name="Player" type="CharacterBody2D" unique_id=111082755 groups=["Player"]]
+motion_mode = 1
+script = ExtResource("1_4ntmi")
+
+[node name="walkTimer" type="Timer" parent="." unique_id=1804535265]
+unique_name_in_owner = true
+wait_time = 0.2
+one_shot = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1801749927]
+texture = SubResource("CompressedTexture2D_l8h54")
+hframes = 2
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=995814641]
+zoom = Vector2(1.5, 1.5)
+limit_enabled = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=705178633]
+visible = false
+position = Vector2(2, 1)
+shape = SubResource("CapsuleShape2D_4ntmi")
+
+[node name="HurtBox" parent="." unique_id=1804052102 instance=ExtResource("2_4ntmi")]
+visible = false
+light_mask = 2
+visibility_layer = 2
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="HurtBox" index="0" unique_id=1443248401]
+light_mask = 2
+visibility_layer = 2
+position = Vector2(1.5, 2.25)
+shape = SubResource("RectangleShape2D_btcbx")
+
+[node name="Attack" type="Node2D" parent="." unique_id=313404710]
+
+[node name="IceSpearTimer" type="Timer" parent="Attack" unique_id=1283037567]
+unique_name_in_owner = true
+wait_time = 1.5
+
+[node name="IceSpearAttackTimer" type="Timer" parent="Attack/IceSpearTimer" unique_id=1601425436]
+unique_name_in_owner = true
+wait_time = 0.075
+
+[node name="TornadoTimer" type="Timer" parent="Attack" unique_id=781745636]
+unique_name_in_owner = true
+wait_time = 3.0
+
+[node name="TornadoAttackTimer" type="Timer" parent="Attack/TornadoTimer" unique_id=1659358664]
+unique_name_in_owner = true
+wait_time = 0.2
+
+[node name="JavelinBase" type="Node2D" parent="Attack" unique_id=1194616127]
+unique_name_in_owner = true
+
+[node name="EnemyDetectionArea" type="Area2D" parent="." unique_id=1222921578]
+visible = false
+collision_layer = 4
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetectionArea" unique_id=1967675492]
+position = Vector2(-1.5, -1)
+shape = SubResource("RectangleShape2D_4ntmi")
+
+[node name="GrabArea" type="Area2D" parent="." unique_id=1172386211]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabArea" unique_id=654225956]
+shape = SubResource("CircleShape2D_4ntmi")
+
+[node name="CollectArea" type="Area2D" parent="." unique_id=725414365]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectArea" unique_id=1946072366]
+shape = SubResource("CircleShape2D_btcbx")
+
+[node name="GUILayer" type="CanvasLayer" parent="." unique_id=1825044289]
+
+[node name="Control" type="Control" parent="GUILayer" unique_id=73721483]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="ExperienceBar" type="TextureProgressBar" parent="GUILayer/Control" unique_id=486367702]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_under = ExtResource("3_gwnis")
+texture_progress = ExtResource("4_k53q1")
+
+[node name="lbl_level" type="Label" parent="GUILayer/Control/ExperienceBar" unique_id=887750572]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 540.0
+offset_right = 640.0
+offset_bottom = 20.0
+theme_override_fonts/font = ExtResource("5_k53q1")
+theme_override_font_sizes/font_size = 16
+text = "Level: 1"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+[connection signal="timeout" from="Attack/IceSpearTimer" to="." method="_on_ice_spear_timer_timeout"]
+[connection signal="timeout" from="Attack/IceSpearTimer/IceSpearAttackTimer" to="." method="_on_ice_spear_attack_timer_timeout"]
+[connection signal="timeout" from="Attack/TornadoTimer" to="." method="_on_tornando_timer_timeout"]
+[connection signal="timeout" from="Attack/TornadoTimer/TornadoAttackTimer" to="." method="_on_tornado_attack_timer_timeout"]
+[connection signal="body_entered" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_entered"]
+[connection signal="body_exited" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_exited"]
+[connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
+[connection signal="area_entered" from="CollectArea" to="." method="_on_collect_area_area_entered"]
+
+[editable path="HurtBox"]

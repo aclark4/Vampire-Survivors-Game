@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cv2wtwedw7uk1"]
+
+[ext_resource type="Script" uid="uid://d05p2rxjcudo" path="res://Utility/hurt_box.gd" id="1_flpa1"]
+
+[node name="HurtBox" type="Area2D" unique_id=1804052102]
+script = ExtResource("1_flpa1")
+HurtBoxType = null
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1443248401]
+light_mask = 0
+visibility_layer = 0
+
+[node name="DisableTimer" type="Timer" parent="." unique_id=1127814794]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="DisableTimer" to="." method="_on_disable_timer_timeout"]

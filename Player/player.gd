@@ -76,7 +76,7 @@ var enemy_close = []
 signal playerdeath()
 
 func _ready():
-	upgrade_character("javelin1") # gives a starting item
+	upgrade_character("icespear1") # gives a starting item
 	attack()
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0,0,0)

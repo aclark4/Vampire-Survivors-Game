@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dfvxf8b50pr3u" path="res://Player/player.tscn" id="2_j4b2l"]
 [ext_resource type="Texture2D" uid="uid://carldo6vnvoos" path="res://Textures/dirt_full_new.png" id="2_js5vo"]
 [ext_resource type="PackedScene" uid="uid://bd328vods7y4u" path="res://Utility/enemy_spawner.tscn" id="3_js5vo"]
+[ext_resource type="PackedScene" uid="uid://cw1lsyk8mnl8t" path="res://Objects/experience_gem.tscn" id="4_y5gj7"]
 [ext_resource type="AudioStream" uid="uid://dsaj1xn5oc3if" path="res://Audio/Music/battleThemeA.mp3" id="5_b33ej"]
 [ext_resource type="Script" uid="uid://kd8rrecgmyl0" path="res://Audio/Music/snd_music.gd" id="6_e2nrw"]
 
@@ -21,6 +22,10 @@ region_rect = Rect2(0, 0, 4000, 4000)
 [node name="EnemySpawner" parent="." unique_id=1185639541 instance=ExtResource("3_js5vo")]
 
 [node name="Loot" type="Node2D" parent="." unique_id=1597228774 groups=["loot"]]
+
+[node name="ExperienceGem" parent="Loot" unique_id=1317888309 instance=ExtResource("4_y5gj7")]
+position = Vector2(54, -25)
+experience = 5
 
 [node name="snd_Music" type="AudioStreamPlayer" parent="." unique_id=943053617]
 process_mode = 3

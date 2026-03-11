@@ -1,11 +1,6 @@
-res://Utility/basic_button.gd
-res://Utility/basic_button.tscn
 res://Player/player.tscn
 res://Player/player.gd
-res://Utility/enemy_spawner.tscn
-res://Utility/enemy_spawner.gd
+res://Utility/item_option.tscn
+res://Utility/item_option.gd
 res://root/root.tscn
-res://Enemy/enemy_super.tscn
-res://TitleScreen.tscn
-res://title_screen.gd
-res://Audio/Music/snd_music.gd
+res://Utility/basic_button.tscn

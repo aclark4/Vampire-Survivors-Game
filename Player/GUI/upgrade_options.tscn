@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dacpr5ddc7b4h"]
+
+[ext_resource type="Script" uid="uid://choi8t4dibqge" path="res://Player/GUI/upgrade_options.gd" id="1_7f232"]
+[ext_resource type="AudioStream" uid="uid://bqx6v47mxwch2" path="res://Audio/GUI/hover.wav" id="2_dc4u2"]
+[ext_resource type="AudioStream" uid="uid://boc4ri06f1emh" path="res://Audio/GUI/click.wav" id="3_eh2ms"]
+
+[node name="UpgradeOptions" type="VBoxContainer" unique_id=1297126172]
+offset_left = 10.0
+offset_top = 50.0
+offset_right = 190.0
+offset_bottom = 100.0
+script = ExtResource("1_7f232")
+
+[node name="snd_hover" type="AudioStreamPlayer" parent="." unique_id=1674765313]
+process_mode = 2
+stream = ExtResource("2_dc4u2")
+
+[node name="snd_click" type="AudioStreamPlayer" parent="." unique_id=256636812]
+process_mode = 2
+stream = ExtResource("3_eh2ms")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

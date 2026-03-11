@@ -7,3 +7,10 @@ res://Enemy/enemy.tscn
 res://Utility/enemy_spawner.gd
 res://Enemy/enemy.gd
 res://Player/Attack/javelin.gd
+res://Utility/item_option.tscn
+res://Utility/item_option.gd
+res://Utility/upgrade_db.tscn
+res://Utility/upgrade_db.gd
+res://Player/Attack/ice_spear.tscn
+res://Player/Attack/ice_spear.gd
+res://Player/Attack/tornado.gd

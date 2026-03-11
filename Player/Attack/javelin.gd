@@ -5,7 +5,7 @@ var hp = 9999
 var speed = 200.0
 var damage = 10
 var knockback_amount = 100
-var paths = 2
+var paths = 1
 var attack_size = 1.0
 var attack_speed = 5.0
 
@@ -41,9 +41,34 @@ func update_javelin():
 			speed = 200.0
 			damage = 10
 			knockback_amount = 100
+			paths = 1
+			attack_size = 1.0 * (1 + player.spell_size)
+			attack_speed = 5.0 * (1 - player.spell_cooldown)
+		2: # Add a path
+			hp = 9999
+			speed = 200.0
+			damage = 10
+			knockback_amount = 100
+			paths = 2
+			attack_size = 1.0 * (1 + player.spell_size)
+			attack_speed = 5.0 * (1 - player.spell_cooldown)
+		3: # Add another path
+			hp = 9999
+			speed = 200.0
+			damage = 10
+			knockback_amount = 100
 			paths = 3
-			attack_size = 1.0
-			attack_speed = 5.0
+			attack_size = 1.0 * (1 + player.spell_size)
+			attack_speed = 5.0 * (1 - player.spell_cooldown)
+			print("3 PATHS NOW")
+		4: # +5 damage, and more knockback
+			hp = 9999
+			speed = 200.0
+			damage = 15
+			knockback_amount = 125
+			paths = 3
+			attack_size = 1.0 * (1 + player.spell_size)
+			attack_speed = 5.0 * (1 - player.spell_cooldown)
 	scale = Vector2(1.0, 1.0) * attack_size
 	attackTimer.wait_time = attack_speed
 	
@@ -55,7 +80,6 @@ func _physics_process(delta: float) -> void:
 		var distance_dif = global_position - player.global_position
 		var return_speed = 20
 		if abs(distance_dif.x) > 200 or abs(distance_dif.y) > 200:
-			print("TOO FAR")
 			return_speed = 150
 		position += player_angle*return_speed*delta
 		rotation = global_position.direction_to(player.global_position).angle() + deg_to_rad(135)

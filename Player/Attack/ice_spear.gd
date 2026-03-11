@@ -10,7 +10,7 @@ var attack_size = 1.0
 var target = Vector2.ZERO
 var angle = Vector2.ZERO
 
-@onready var player = get_tree().get_first_node_in_group("player")
+@onready var player = get_tree().get_first_node_in_group("Player")
 signal remove_from_array(object)
 
 func _ready():
@@ -22,37 +22,37 @@ func _ready():
 			speed = 100
 			damage = 5
 			knockback_amount = 100
-			attack_size = 1
-		2: # hp upgrade
-			hp = 3
-			speed = 100
-			damage = 5
-			knockback_amount = 100
-			attack_size = 1
-		3: # damage upgrade
+			attack_size = 1 * (1 + player.spell_size)
+		2: # hp upgrade +3 damage
 			hp = 3
 			speed = 100
 			damage = 8
 			knockback_amount = 100
-			attack_size = 1
-		3: # speed upgrade
+			attack_size = 1 * (1 + player.spell_size)
+		3: # Multiple ice spear Upgrade
 			hp = 3
-			speed = 125
+			speed = 100
 			damage = 8
 			knockback_amount = 100
-			attack_size = 10
-		4: # size upgrade
+			attack_size = 1 * (1 + player.spell_size)
+		4: # speed upgrade
+			hp = 3
+			speed = 135
+			damage = 8
+			knockback_amount = 100
+			attack_size = 1 * (1 + player.spell_size)
+		5: # size upgrade + 4 damage
 			hp = 3
 			speed = 100
 			damage = 12
 			knockback_amount = 100
-			attack_size = 1.5
-		5: # knockback upgrade
+			attack_size = 1.5 * (1 + player.spell_size)
+		6: # knockback upgrade, + 2 more ice spears
 			hp = 3
 			speed = 100
 			damage = 12
 			knockback_amount = 150
-			attack_size = 1.5
+			attack_size = 1.5 * (1 + player.spell_size)
 			
 	var tween = create_tween() #setparallel(true) for same time animations
 	tween.tween_property(self, "scale", Vector2(1,1)*attack_size,1).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)

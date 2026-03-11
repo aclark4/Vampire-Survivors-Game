@@ -6,6 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://lq7uyeym8qrg" path="res://Textures/GUI/exp_progress.png" id="4_k53q1"]
 [ext_resource type="FontFile" uid="uid://dx8hw3u0fred3" path="res://Font/tenderness.otf" id="5_k53q1"]
 [ext_resource type="AudioStream" uid="uid://bij22ggp6l5kd" path="res://Audio/SoundEffect/levelup.ogg" id="6_fhl08"]
+[ext_resource type="Texture2D" uid="uid://dv3fxf32d4c1r" path="res://Textures/GUI/healthbar.png" id="7_od3ui"]
+[ext_resource type="Texture2D" uid="uid://cd5jdlw2rrjl3" path="res://Textures/GUI/health.png" id="8_00tjw"]
+[ext_resource type="PackedScene" uid="uid://b3uowk0fcuict" path="res://Utility/basic_button.tscn" id="9_00tjw"]
+[ext_resource type="AudioStream" uid="uid://cqj6upkni4ugq" path="res://Audio/SoundEffect/Victory.wav" id="9_apopc"]
+[ext_resource type="AudioStream" uid="uid://bxyxnl1jnibll" path="res://Audio/SoundEffect/Lose.ogg" id="10_5htga"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l8h54"]
 load_path = "res://.godot/imported/player_sprite.png-99975927c87d39d0f4e4a4a21b6d0fe5.ctex"
@@ -52,6 +57,7 @@ light_mask = 2
 visibility_layer = 2
 collision_layer = 2
 collision_mask = 2
+HurtBoxType = 0
 
 [node name="CollisionShape2D" parent="HurtBox" index="0" unique_id=1443248401]
 light_mask = 2
@@ -132,6 +138,18 @@ text = "Level: 1"
 horizontal_alignment = 1
 vertical_alignment = 2
 
+[node name="HealthBar" type="TextureProgressBar" parent="GUILayer/GUI" unique_id=741227293]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.39215687)
+layout_mode = 0
+offset_left = 304.0
+offset_top = 205.0
+offset_right = 336.0
+offset_bottom = 213.0
+value = 50.0
+texture_over = ExtResource("7_od3ui")
+texture_progress = ExtResource("8_00tjw")
+
 [node name="LevelUP" type="Panel" parent="GUILayer/GUI" unique_id=1139858143]
 unique_name_in_owner = true
 process_mode = 2
@@ -164,6 +182,75 @@ unique_name_in_owner = true
 stream = ExtResource("6_fhl08")
 volume_db = -25.0
 
+[node name="DeathPanel" type="Panel" parent="GUILayer/GUI" unique_id=464930044]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+layout_mode = 0
+offset_left = 310.0
+offset_top = -276.0
+offset_right = 510.0
+offset_bottom = -26.0
+
+[node name="lbl_Result" type="Label" parent="GUILayer/GUI/DeathPanel" unique_id=1996710932]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 50.0
+theme_override_fonts/font = ExtResource("5_k53q1")
+text = "You Died!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="snd_victory" type="AudioStreamPlayer" parent="GUILayer/GUI/DeathPanel" unique_id=1762200466]
+unique_name_in_owner = true
+stream = ExtResource("9_apopc")
+volume_db = -15.0
+
+[node name="snd_lose" type="AudioStreamPlayer" parent="GUILayer/GUI/DeathPanel" unique_id=1106719822]
+unique_name_in_owner = true
+stream = ExtResource("10_5htga")
+volume_db = -15.0
+
+[node name="btn_menu" parent="GUILayer/GUI/DeathPanel" unique_id=1172550107 instance=ExtResource("9_00tjw")]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 200.0
+offset_right = 140.0
+offset_bottom = 230.0
+text = "Menu"
+
+[node name="lblTimer" type="Label" parent="GUILayer/GUI" unique_id=966547414]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 280.0
+offset_top = 20.0
+offset_right = 360.0
+offset_bottom = 44.0
+theme_override_fonts/font = ExtResource("5_k53q1")
+theme_override_font_sizes/font_size = 20
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CollectedWeapons" type="GridContainer" parent="GUILayer/GUI" unique_id=1388707290]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 24.0
+offset_right = 208.0
+offset_bottom = 40.0
+columns = 10
+
+[node name="CollectedUpgrades" type="GridContainer" parent="GUILayer/GUI" unique_id=347913781]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 208.0
+offset_bottom = 56.0
+columns = 10
+
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
 [connection signal="timeout" from="Attack/IceSpearTimer" to="." method="_on_ice_spear_timer_timeout"]
 [connection signal="timeout" from="Attack/IceSpearTimer/IceSpearAttackTimer" to="." method="_on_ice_spear_attack_timer_timeout"]
@@ -173,5 +260,6 @@ volume_db = -25.0
 [connection signal="body_exited" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_exited"]
 [connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
 [connection signal="area_entered" from="CollectArea" to="." method="_on_collect_area_area_entered"]
+[connection signal="click_end" from="GUILayer/GUI/DeathPanel/btn_menu" to="." method="_on_btn_menu_click_end"]
 
 [editable path="HurtBox"]

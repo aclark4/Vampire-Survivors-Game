@@ -14,7 +14,7 @@ var angle_more = Vector2.ZERO
 
 signal remove_from_array(object)
 
-@onready var player = get_tree().get_first_node_in_group("player")
+@onready var player = get_tree().get_first_node_in_group("Player")
 
 func _ready():
 	match level:
@@ -88,5 +88,5 @@ func enemy_hit(_charge):
 
 
 func _on_timer_timeout() -> void:
-	emit_signal("remove_from_array")
+	emit_signal("remove_from_array", self)
 	queue_free()

@@ -4,6 +4,7 @@ var hp = 80
 var maxhp = 80
 var movement_speed = 40.0
 var last_movement = Vector2.UP
+var time = 0
 
 var experience = 0
 var experience_level = 1
@@ -59,11 +60,26 @@ var enemy_close = []
 @onready var upgradeOptions = get_node("%UpgradeOptions")
 @onready var sndLevelUP = get_node("%snd_levelup")
 @onready var itemOptions = preload("res://Utility/item_option.tscn")
+@onready var healthBar = get_node("%HealthBar")
+@onready var lblTimer = get_node("%lblTimer")
+@onready var collectedWeapons = get_node("%CollectedWeapons")
+@onready var collectedUpgrades = get_node("%CollectedUpgrades")
+@onready var itemContainer = preload("res://Player/GUI/item_container.tscn")
+
+#DEATH MENU
+@onready var deathPanel = get_node("%DeathPanel")
+@onready var lblResult = get_node("%lbl_Result")
+@onready var sndVictory = get_node("%snd_victory")
+@onready var sndLose = get_node("%snd_lose")
+
+#Signal
+signal playerdeath()
 
 func _ready():
 	upgrade_character("javelin1") # gives a starting item
 	attack()
 	set_expbar(experience, calculate_experiencecap())
+	_on_hurt_box_hurt(0,0,0)
 	
 func _physics_process(delta): # This runs every 1/60th of a second. Delta controls that I believe.
 	movement()
@@ -92,8 +108,10 @@ func movement():
 
 func _on_hurt_box_hurt(damage: Variant, _angle, _knockback) -> void:
 	hp -= clamp(damage-armor, 1.0, 999.0)  # clamp works as variable, min, max
+	healthBar.max_value = maxhp
+	healthBar.value = hp
 	if hp <= 0:
-		print("DEAD")
+		death()
 		
 func attack():
 	if icespear_level > 0:
@@ -155,7 +173,7 @@ func spawn_javelin():
 	var get_javelins = javelinBase.get_children() # will be an array of all of the children
 	for i in get_javelins:
 		if i.has_method("upgrade_javelin"):
-			i.update_javelin
+			i.update_javelin()
 
 	
 func get_random_target():
@@ -284,7 +302,7 @@ func upgrade_character(upgrade):
 		"food":
 			hp += 20
 			hp = clamp(hp,0,maxhp) # prevents the hp from going over the max
-	
+	adjust_gui_collection(upgrade)
 	attack()
 	
 	var option_children = upgradeOptions.get_children()
@@ -312,7 +330,7 @@ func get_random_item():
 				if not n in collected_upgrades: # The prereq must be in the already collected upgrades
 					to_add = false
 			if to_add:
-				dblist.apend(i)
+				dblist.append(i)
 		else:
 			dblist.append(i)
 	if dblist.size() > 0:
@@ -322,4 +340,48 @@ func get_random_item():
 	else:
 		return null
 		
-			
+func change_time(argtime = 0):
+	time = argtime
+	var get_m = int(time/60.0) # will return number of minutes
+	var get_s = time % 60
+	if get_m < 10: # makes sure there is always 2 numbers in the minutes section
+		get_m = str(0,get_m)
+	if get_s < 10:
+		get_s = str(0,get_s)
+	lblTimer.text = str(get_m,":",get_s)
+	
+func adjust_gui_collection(upgrade):
+	var get_upgraded_displayname = UpgradeDb.UPGRADES[upgrade]["displayname"]
+	var get_type = UpgradeDb.UPGRADES[upgrade]["type"]
+	if get_type != "item":
+		var get_collected_display_names = []
+		for i in collected_upgrades:
+			get_collected_display_names.append(UpgradeDb.UPGRADES[i]["displayname"])
+		if not get_upgraded_displayname in get_collected_display_names:
+			var new_item = itemContainer.instantiate()
+			new_item.upgrade = upgrade
+			print()
+			match get_type:
+				"weapon":
+					collectedWeapons.add_child(new_item)
+				"upgrade":
+					collectedUpgrades.add_child(new_item)
+
+func death():
+	deathPanel.visible = true
+	emit_signal("playerdeath")
+	get_tree().paused = true
+	var tween = deathPanel.create_tween()
+	tween.tween_property(deathPanel, "position", Vector2(220, 50), 3.0).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	tween.play()
+	if time >= 300:
+		lblResult.text = "You Win!"
+		sndVictory.play()
+	else:
+		lblResult.text = "You Lose!"
+		sndLose.play()
+
+
+func _on_btn_menu_click_end() -> void:
+	get_tree().paused = false
+	var _level = get_tree().change_scene_to_file("res://TitleScreen.tscn")

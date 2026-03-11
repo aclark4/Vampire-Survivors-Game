@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Survivors Clone"
-run/main_scene="uid://daad41ve41iur"
+run/main_scene="uid://dabgt5n52kydf"
 config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 
@@ -27,6 +27,7 @@ UpgradeDb="*uid://8ybbutog6psh"
 
 window/size/viewport_width=640
 window/size/viewport_height=360
+window/size/mode=3
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"

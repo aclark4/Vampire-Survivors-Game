@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://dabgt5n52kydf"]
+
+[ext_resource type="Script" uid="uid://cn4aw2oc1ned2" path="res://title_screen.gd" id="1_1xr1c"]
+[ext_resource type="FontFile" uid="uid://dx8hw3u0fred3" path="res://Font/tenderness.otf" id="1_fnlyl"]
+[ext_resource type="PackedScene" uid="uid://b3uowk0fcuict" path="res://Utility/basic_button.tscn" id="2_pkhjh"]
+
+[node name="Menu" type="Control" unique_id=1899243774]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_1xr1c")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=820365501]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 376.0
+color = Color(0.88307756, 0.14080364, 0.17022854, 1)
+
+[node name="Label" type="Label" parent="." unique_id=158235705]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 100.0
+theme_override_fonts/font = ExtResource("1_fnlyl")
+theme_override_font_sizes/font_size = 60
+text = "Vampire Survivors Clone"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="btn_play" parent="." unique_id=1172550107 instance=ExtResource("2_pkhjh")]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 250.0
+offset_right = 360.0
+offset_bottom = 280.0
+text = "Play"
+
+[node name="btn_exit" parent="." unique_id=1170417734 instance=ExtResource("2_pkhjh")]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 290.0
+offset_right = 360.0
+offset_bottom = 320.0
+text = "Quit"
+
+[connection signal="click_end" from="btn_play" to="." method="_on_btn_play_click_end"]
+[connection signal="click_end" from="btn_exit" to="." method="_on_btn_exit_click_end"]

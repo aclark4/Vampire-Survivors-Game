@@ -1,12 +1,15 @@
 extends Node2D
 
 @export var spawns: Array[Spawn_info] = []
+@export var time = 0
 
 @onready var player = get_tree().get_first_node_in_group("Player")
 
-var time = 0
 
+signal changetime(time)
 
+func _ready():
+	connect("changetime", Callable(player, "change_time"))
 
 func _on_timer_timeout():
 	time += 1
@@ -23,6 +26,8 @@ func _on_timer_timeout():
 					enemy_spawn.global_position = get_random_position()
 					add_child(enemy_spawn)
 					counter += 1
+	emit_signal("changetime", time)
+	
 					
 func get_random_position():
 	var vpr = get_viewport_rect().size * randf_range(1.1,1.4)

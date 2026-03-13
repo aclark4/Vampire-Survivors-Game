@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://y70oykkhk846" path="res://Textures/Enemy/explosion_pixelfied.png" id="1_efvv7"]
 [ext_resource type="AudioStream" uid="uid://dddwi3tl5uw4f" path="res://Audio/SoundEffect/enemy_death.ogg" id="2_4j08v"]
 [ext_resource type="Script" uid="uid://t5ew3ytb8jrk" path="res://Enemy/explosion.gd" id="2_vexy0"]
+[ext_resource type="AudioStream" uid="uid://c3wx1gb5irla5" path="res://Audio/SoundEffect/enemyDeath.mp3" id="4_vexy0"]
 
 [sub_resource type="Animation" id="Animation_vexy0"]
 length = 0.001
@@ -57,4 +58,9 @@ autoplay = true
 root_node = NodePath("../snd_explosion")
 libraries/ = SubResource("AnimationLibrary_8jjc3")
 
+[node name="snd_death" type="AudioStreamPlayer2D" parent="." unique_id=1717442446]
+stream = ExtResource("4_vexy0")
+autoplay = true
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="finished" from="snd_death" to="." method="_on_snd_death_finished"]

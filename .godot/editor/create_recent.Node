@@ -1,4 +1,9 @@
+AudioStreamPlayer2D
 AudioStreamPlayer
+Timer
+Area2D
+CollisionShape2D
+Sprite2D
 Button
 Label
 ColorRect
@@ -8,7 +13,3 @@ TextureRect
 TextureProgressBar
 Node
 VBoxContainer
-Panel
-CanvasLayer
-CollisionShape2D
-Area2D

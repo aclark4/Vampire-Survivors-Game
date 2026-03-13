@@ -14,6 +14,7 @@ var collected_experience = 0
 var iceSpear = preload("res://Player/Attack/ice_spear.tscn")
 var tornado = preload("res://Player/Attack/tornado.tscn")
 var javelin = preload("res://Player/Attack/javelin.tscn")
+var fireball = preload("res://Player/Attack/fireball.tscn")
 
 #ATTACK NODES
 @onready var iceSpearTimer = get_node("%IceSpearTimer")
@@ -21,6 +22,8 @@ var javelin = preload("res://Player/Attack/javelin.tscn")
 @onready var tornadoTimer = get_node("%TornadoTimer")
 @onready var tornadoAttackTimer = get_node("%TornadoAttackTimer")
 @onready var javelinBase = get_node("%JavelinBase")
+@onready var fireballTimer = get_node("%FireballTimer")
+@onready var fireballAttackTimer = get_node("%FireballAttackTimer")
 
 #UPGRADES
 var collected_upgrades = [] # Contains all upgrades that are currently used
@@ -46,6 +49,12 @@ var tornado_level = 0
 #Javelin
 var javelin_ammo = 0
 var javelin_level = 0
+
+#Fireball
+var fireball_ammo = 1
+var fireball_level = 1
+var fireball_baseammo = 1
+var fireball_attackspeed = 2.0
 
 #Enemy Related
 var enemy_close = []
@@ -76,7 +85,7 @@ var enemy_close = []
 signal playerdeath()
 
 func _ready():
-	upgrade_character("icespear1") # gives a starting item
+	upgrade_character("fireball1") # gives a starting item
 	attack()
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0,0,0)
@@ -124,6 +133,10 @@ func attack():
 			tornadoTimer.start() #
 	if javelin_level > 0:
 		spawn_javelin()
+	if fireball_level > 0:
+		fireballTimer.wait_time = fireball_attackspeed * (1 - spell_cooldown)
+		if fireballTimer.is_stopped(): # This means it just shot.
+			fireballTimer.start() #
 
 func _on_ice_spear_timer_timeout() -> void:
 	icespear_ammo += icespear_baseammo + additional_attacks #This is loading the ammo
@@ -142,6 +155,26 @@ func _on_ice_spear_attack_timer_timeout() -> void: #This is like shooting the ma
 			iceSpearAttackTimer.start()
 		else:
 			iceSpearAttackTimer.stop()
+			
+
+func _on_fireball_timer_timeout() -> void:
+	fireball_ammo += fireball_baseammo + additional_attacks #This is loading the ammo
+	fireballAttackTimer.start()
+
+
+func _on_fireball_attack_timer_timeout() -> void:
+	if fireball_ammo > 0:
+		var fireball_attack: Node2D = fireball.instantiate()
+		fireball_attack.position = position
+		fireball_attack.target = get_global_mouse_position()
+		fireball_attack.level = fireball_level
+		add_child(fireball_attack)
+		fireball_ammo -= 1
+		if fireball_ammo > 0:
+			fireballAttackTimer.start()
+		else:
+			fireballAttackTimer.stop()
+		
 
 func _on_tornando_timer_timeout() -> void:
 	tornado_ammo += tornado_baseammo + additional_attacks #This is loading the ammo
@@ -302,6 +335,19 @@ func upgrade_character(upgrade):
 		"food":
 			hp += 20
 			hp = clamp(hp,0,maxhp) # prevents the hp from going over the max
+		"fireball1":
+			fireball_level = 1
+		"fireball2":
+			fireball_level = 2
+		"fireball3":
+			fireball_level = 3
+			fireball_baseammo += 1
+		"fireball4":
+			fireball_level = 4
+			fireball_baseammo += 1
+		"fireball15":
+			fireball_level = 5
+			fireball_baseammo += 1
 	adjust_gui_collection(upgrade)
 	attack()
 	

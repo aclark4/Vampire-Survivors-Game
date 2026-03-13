@@ -13,6 +13,7 @@ var knockback = Vector2.ZERO
 @onready var anim = $AnimationPlayer
 @onready var snd_hit = $snd_hit
 @onready var hitbox = $HitBox
+@onready var snd_death = $snd_death
 
 var death_anim = preload("res://Enemy/explosion.tscn")
 var exp_gem = preload("res://Objects/experience_gem.tscn")
@@ -47,12 +48,16 @@ func death():
 	new_gem.experience = experience
 	loot_base.call_deferred("add_child", new_gem)
 	queue_free()
+
 	
 
 func _on_hurt_box_hurt(damage, angle, knockback_amount):
 	hp -= damage
 	knockback = angle * knockback_amount
 	if hp <= 0: # Death
+		print("DEAD")
+		# snd_death.play()
+		# $Sprite2D.visible = false
 		death()
 	else:
 		snd_hit.play()

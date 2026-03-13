@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://ua80ro3c8xtw"]
+
+[ext_resource type="Texture2D" uid="uid://q5j2qkxmiukw" path="res://Textures/Items/Weapons/fireball.png" id="1_kqu4g"]
+[ext_resource type="Script" uid="uid://dcs6405ys37fm" path="res://Player/Attack/fireball.gd" id="1_wtmxj"]
+[ext_resource type="AudioStream" uid="uid://bbsmitni0he73" path="res://Audio/SoundEffect/Fireball.mp3" id="3_yyut8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kqu4g"]
+radius = 7.0
+
+[node name="fireball" type="Area2D" unique_id=222772185 groups=["attack"]]
+top_level = true
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_wtmxj")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1195156743]
+texture = ExtResource("1_kqu4g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1459895800]
+position = Vector2(-2, 2)
+shape = SubResource("CircleShape2D_kqu4g")
+
+[node name="Timer" type="Timer" parent="." unique_id=1191825031]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1518287368]
+stream = ExtResource("3_yyut8")
+volume_db = -25.0
+pitch_scale = 2.4
+autoplay = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

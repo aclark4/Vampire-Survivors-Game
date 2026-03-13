@@ -24,8 +24,7 @@ region_rect = Rect2(0, 0, 4000, 4000)
 [node name="Loot" type="Node2D" parent="." unique_id=1597228774 groups=["loot"]]
 
 [node name="ExperienceGem" parent="Loot" unique_id=1317888309 instance=ExtResource("4_y5gj7")]
-position = Vector2(54, -25)
-experience = 5
+experience = 100
 
 [node name="snd_Music" type="AudioStreamPlayer" parent="." unique_id=943053617]
 process_mode = 3

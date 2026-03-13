@@ -1,6 +1,5 @@
 res://Player/player.tscn
-res://Player/player.gd
-res://Utility/item_option.tscn
-res://Utility/item_option.gd
-res://root/root.tscn
-res://Utility/basic_button.tscn
+res://Enemy/enemy.gd
+res://Enemy/explosion.tscn
+res://Enemy/explosion.gd
+res://Enemy/enemy_kobold_weak.tscn

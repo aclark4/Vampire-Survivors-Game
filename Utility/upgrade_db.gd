@@ -266,5 +266,45 @@ const UPGRADES = { # Directory of Upgrades
 		"level": "N/A",
 		"prerequisite": [],
 		"type": "item"
-	}
+	},
+	"fireball1": {
+		"icon": WEAPON_PATH + "fireball.png",
+		"displayname": "Fireball!",
+		"details": "An aimed fireball shot",
+		"level": "Level: 1",
+		"prerequisite": [],
+		"type": "weapon"
+	},
+	"fireball2": {
+		"icon": WEAPON_PATH + "fireball.png",
+		"displayname": "Fireball!",
+		"details": "Can hit 3 enemies, and does more damage!",
+		"level": "Level: 2",
+		"prerequisite": ["fireball1"],
+		"type": "weapon"
+	},
+	"fireball3": {
+		"icon": WEAPON_PATH + "fireball.png",
+		"displayname": "Fireball!",
+		"details": "2 more Fireballs to shoot!",
+		"level": "Level: 3",
+		"prerequisite": ["fireball2"],
+		"type": "weapon"
+	},
+	"fireball4": {
+		"icon": WEAPON_PATH + "fireball.png",
+		"displayname": "Fireball!",
+		"details": "Another Fireball, and move faster!",
+		"level": "Level: 4",
+		"prerequisite": ["fireball3"],
+		"type": "weapon"
+	},
+	"fireball5": {
+		"icon": WEAPON_PATH + "fireball.png",
+		"displayname": "Fireball!",
+		"details": "Larger, Chaotic Fireballs.",
+		"level": "Level: 5",
+		"prerequisite": ["fireball4"],
+		"type": "weapon"
+	},
 }
